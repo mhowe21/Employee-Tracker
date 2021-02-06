@@ -1,15 +1,19 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const connection = mysql.createConnection({
   host: "localhost",
+  port: 3306,
+  // Your MySQL username
   user: "root",
-  database: "test",
-  password: "CZ~Top~9X19",
+  // Your MySQL password
+  password: "dbPassword",
+  database: "ice_creamDB",
 });
 
 connection.connect((err) => {
   if (err) throw err;
-  console.log("connected");
+  console.log("connected as id " + connection.threadId + "\n");
 });
 
 module.exports = connection;
