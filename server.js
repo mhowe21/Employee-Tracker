@@ -96,6 +96,26 @@ async function getInput() {
     );
   }
   if (givenOption.options == "Update an Employee Role") {
-    console.log("placeholder code");
+    let updateEmployee = await p.updateEmployee();
+    console.log(updateEmployee);
+    const query = connection.query(
+      "UPDATE employee SET ? WHERE ?",
+      [
+        {
+          first_name: updateEmployee.first_name,
+          last_name: updateEmployee.last_name,
+          role_id: updateEmployee.role_id,
+          manager_id: updateEmployee.manager_id,
+        },
+        {
+          id: updateEmployee.id,
+        },
+      ],
+      function (err, res) {
+        if (err) throw err;
+        console.log(res.affectedRows + " employees updated!\n");
+        connection.end();
+      }
+    );
   }
 }
