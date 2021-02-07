@@ -47,18 +47,31 @@ async function getInput() {
     });
   }
   if (givenOption.options == "Add a Department") {
-    //console.log("placeholder code");
     let department = await p.newDepartmentPrompts();
     console.log(department);
-    const query = connection.query("INSERT INTO department (departmentName) VALUES(?);",[department.department],function(err,res){
-      if(err) throw err;
-      console.log(res);
-      connection.end();
-    })
-
+    const query = connection.query(
+      "INSERT INTO department (departmentName) VALUES(?);",
+      [department.department],
+      function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+      }
+    );
   }
   if (givenOption.options == "Add a Role") {
-    console.log("placeholder code");
+    let role = await p.newRole();
+    console.log(role);
+    const query = connection.query(
+      "INSERT INTO role(title,salary,department_id) VALUES(?,?,?);",
+      [role.title, role.salary, role.department],
+      function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+      }
+    );
+    console.log(query.sql);
   }
   if (givenOption.options == "Add a Employee") {
     console.log("placeholder code");
