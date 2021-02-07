@@ -126,6 +126,17 @@ async function getInput() {
       }
     );
   }
+  if(givenOption.options == "Delete an Employee"){
+    let deleteUser = await p.deleteEmployee();
+    console.log(deleteUser);
+    const query = connection.query("DELETE FROM employee WHERE id=?",[deleteUser.delete_user],function(err,res){
+      if (err) console.log(err);
+      console.log(query.sql);
+      console.table(res);
+    })
+    console.log(query.sql);
+    another();
+  }
   if(givenOption.options == "Exit"){
     connection.end;
     console.log("Goodbuy");
