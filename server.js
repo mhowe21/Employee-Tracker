@@ -31,6 +31,7 @@ async function getInput() {
       console.log(res);
       connection.end();
     });
+    console.log(query.sql);
   }
   if (givenOption.options == "View All Departments") {
     const query = connection.query("SELECT * FROM department;", (err, res) => {
@@ -38,6 +39,7 @@ async function getInput() {
       console.log(res);
       connection.end();
     });
+    console.log(query.sql);
   }
   if (givenOption.options == "View All Employees") {
     const query = connection.query("SELECT * FROM employee;", (err, res) => {
@@ -45,6 +47,7 @@ async function getInput() {
       console.log(res);
       connection.end();
     });
+    console.log(query.sql);
   }
   if (givenOption.options == "Add a Department") {
     let department = await p.newDepartmentPrompts();
@@ -58,6 +61,7 @@ async function getInput() {
         connection.end();
       }
     );
+    console.log(query.sql);
   }
   if (givenOption.options == "Add a Role") {
     let role = await p.newRole();
@@ -73,8 +77,23 @@ async function getInput() {
     );
     console.log(query.sql);
   }
-  if (givenOption.options == "Add a Employee") {
-    console.log("placeholder code");
+  if (givenOption.options == "Add an Employee") {
+    let employee = await p.newEmployee();
+    console.log(employee);
+    const query = connection.query(
+      "INSERT INTO employee (first_name,last_name,role_id,manager_id) VALUES(?,?,?,?)",
+      [
+        employee.firstName,
+        employee.lastName,
+        employee.roleID,
+        employee.managerID,
+      ],
+      function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+      }
+    );
   }
   if (givenOption.options == "Update an Employee Role") {
     console.log("placeholder code");
