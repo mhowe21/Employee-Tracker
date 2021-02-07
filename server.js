@@ -47,7 +47,15 @@ async function getInput() {
     });
   }
   if (givenOption.options == "Add a Department") {
-    console.log("placeholder code");
+    //console.log("placeholder code");
+    let department = await p.newDepartmentPrompts();
+    console.log(department);
+    const query = connection.query("INSERT INTO department (departmentName) VALUES(?);",[department.department],function(err,res){
+      if(err) throw err;
+      console.log(res);
+      connection.end();
+    })
+
   }
   if (givenOption.options == "Add a Role") {
     console.log("placeholder code");
