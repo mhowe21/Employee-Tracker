@@ -18,6 +18,7 @@ To install you will first need to have a MySQL server installed. Then add an env
 
   ## Usage
 To use run node server.js. This will launch the application. You will be greeted with various options that allow you to edit the database. 
+[Usage Video](https://drive.google.com/file/d/1OwYVI27zdpEGK5i-tdDE19QrKzaLRY2Y/view?usp=sharing)
 
   ## License
 [MIT](https://opensource.org/licenses/MIT) information
