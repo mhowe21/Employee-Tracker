@@ -30,25 +30,28 @@ async function getInput() {
     const query = connection.query("SELECT * FROM role;", (err, res) => {
       if (err) throw err;
       console.table(res);
-      connection.end();
+      //connection.end();
     });
+    another();
     console.log(query.sql);
   }
   if (givenOption.options == "View All Departments") {
     const query = connection.query("SELECT * FROM department;", (err, res) => {
       if (err) throw err;
       console.table(res);
-      connection.end();
+      //connection.end();
     });
     console.log(query.sql);
+    another();
   }
   if (givenOption.options == "View All Employees") {
     const query = connection.query("SELECT * FROM employee;", (err, res) => {
       if (err) throw err;
       console.table(res);
-      connection.end();
+      //connection.end();
     });
     console.log(query.sql);
+    another();
   }
   if (givenOption.options == "Add a Department") {
     let department = await p.newDepartmentPrompts();
@@ -59,10 +62,11 @@ async function getInput() {
       function (err, res) {
         if (err) throw err;
         console.table(res);
-        connection.end();
+        //connection.end();
       }
     );
     console.log(query.sql);
+    another();
   }
   if (givenOption.options == "Add a Role") {
     let role = await p.newRole();
@@ -73,10 +77,11 @@ async function getInput() {
       function (err, res) {
         if (err) throw err;
         console.table(res);
-        connection.end();
+        //connection.end();
       }
     );
     console.log(query.sql);
+    another();
   }
   if (givenOption.options == "Add an Employee") {
     let employee = await p.newEmployee();
@@ -92,7 +97,8 @@ async function getInput() {
       function (err, res) {
         if (err) throw err;
         console.table(res);
-        connection.end();
+        //connection.end();
+        another();
       }
     );
   }
@@ -115,8 +121,34 @@ async function getInput() {
       function (err, res) {
         if (err) throw err;
         console.log(res.affectedRows + " employees updated!\n");
-        connection.end();
+        //connection.end();
+        another();
       }
     );
+  }
+  if(givenOption.options == "Delete an Employee"){
+    let deleteUser = await p.deleteEmployee();
+    console.log(deleteUser);
+    const query = connection.query("DELETE FROM employee WHERE id=?",[deleteUser.delete_user],function(err,res){
+      if (err) console.log(err);
+      console.log(query.sql);
+      console.table(res);
+    })
+    console.log(query.sql);
+    another();
+  }
+  if(givenOption.options == "Exit"){
+    connection.end;
+    console.log("Goodbuy");
+  }
+}
+
+async function another(){
+  let another = await p.anotherItem();
+  if(another.continue == "Yes"){
+    getInput();
+  }else{
+    connection.end();
+    console.log("Goodbuy");
   }
 }
